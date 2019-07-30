@@ -11,7 +11,7 @@ if (!$con) {
   die();
 }
 
-/*if ($_POST["il"] <> "" and $_POST["ilce"] <> "") {
+if ($_POST["il"] <> "" and $_POST["ilce"] <> "") {
   $key = "$baseurl?il={$_POST["il"]}&ilce={$_POST["ilce"]}&key=123abc";
 }
 else if ($_POST["ilce"] <> "") {
@@ -19,7 +19,7 @@ else if ($_POST["ilce"] <> "") {
 }
 else if ($_POST["il"] <> "") {
   $key = "$baseurl?il={$_POST["il"]}&key=123abc";
-}*/
+}
 
 if($_POST["i"] <> "") {
   $apiurl = "$baseurl?i={$_POST["i"]}&key=123abc";
