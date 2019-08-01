@@ -73,7 +73,6 @@ if (isset($_POST["key"])) {
                     <br>
                     <br>
 
-
                     <a href="index.php"><button type="button" class="btn btn-light">Geri Dön</button></a>
                     <a href="api.php"><button type="button" class="btn btn-light">Api Test</button></a>
 
