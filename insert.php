@@ -1,6 +1,6 @@
 
 <?php
-$baseurl="http://localhost/git/API/?";
+$baseurl="http://localhost/git/API/";
 
 if (isset($_GET["insert"])) {
   if ($_GET["insert"]==1) {
@@ -15,7 +15,7 @@ if (isset($_GET["insert"])) {
 
 if (isset($_POST["key"])) {
   if ($_POST["key"]=="123abc") {
-    $url=$baseurl.sprintf("il=%s&ilce=%s&kayitli=%s&oykullanan=%s&gecerli=%s&gecersiz=%s&evet=%s&hayir=%s&p=insert&key=123abc",
+    $url=$baseurl.sprintf("?il=%s&ilce=%s&kayitli=%s&oykullanan=%s&gecerli=%s&gecersiz=%s&evet=%s&hayir=%s&p=insert&key=123abc",
                 $_POST["il"],$_POST["ilce"],$_POST["kayitli"],$_POST["oykullanan"],
                 $_POST["gecerli"],$_POST["gecersiz"],$_POST["evet"],$_POST["hayir"]);
     if ($_POST["url"]<>"url") {
@@ -75,7 +75,7 @@ if (isset($_POST["key"])) {
 
 
                     <a href="index.php"><button type="button" class="btn btn-light">Geri Dön</button></a>
-                    <a href="insert.php"><button type="button" class="btn btn-light">Api Test</button></a>
+                    <a href="api.php"><button type="button" class="btn btn-light">Api Test</button></a>
 
                   </form>
                 </div>
