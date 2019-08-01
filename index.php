@@ -1,6 +1,8 @@
 
 <?php
 $baseurl="http://localhost/git/API/";
+$key ="123abc";
+
 $server="localhost";
 $user="root";
 $pass="123";
@@ -15,22 +17,13 @@ if (!$con) {
 $html=1;
 
 mysqli_query($con, "set names 'utf8'");
-if ($_POST["il"] <> "" and $_POST["ilce"] <> "") {
-  $key = "$baseurl?il={$_POST["il"]}&ilce={$_POST["ilce"]}&key=123abc";
-}
-else if ($_POST["ilce"] <> "") {
-  $key = "$baseurl?ilce={$_POST["ilce"]}&key=123abc";
-}
-else if ($_POST["il"] <> "") {
-  $key = "$baseurl?il={$_POST["il"]}&key=123abc";
-}
 
 if($_POST["i"] <> "") {
-  $apiurl = "$baseurl?i={$_POST["i"]}&key=123abc";
+  $apiurl = "$baseurl?i={$_POST["i"]}&key=$key";
 }
 
   if (isset($_GET["key"])) {
-    if ($_GET["key"]=="123abc") {
+    if ($_GET["key"]==$key) {
         if ($_GET["p"]=="insert") {
           $html=0;
           $sql=sprintf("INSERT INTO referandum (il,ilce,kayitli,oykullanan,gecerli,gecersiz,evet,hayir)

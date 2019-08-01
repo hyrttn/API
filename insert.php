@@ -1,6 +1,7 @@
 
 <?php
 $baseurl="http://localhost/git/API/";
+$key ="123abc";
 
 if (isset($_GET["insert"])) {
   if ($_GET["insert"]==1) {
@@ -14,7 +15,7 @@ if (isset($_GET["insert"])) {
 
 
 if (isset($_POST["key"])) {
-  if ($_POST["key"]=="123abc") {
+  if ($_POST["key"]==$key) {
     $url=$baseurl.sprintf("?il=%s&ilce=%s&kayitli=%s&oykullanan=%s&gecerli=%s&gecersiz=%s&evet=%s&hayir=%s&p=insert&key=123abc",
                 $_POST["il"],$_POST["ilce"],$_POST["kayitli"],$_POST["oykullanan"],
                 $_POST["gecerli"],$_POST["gecersiz"],$_POST["evet"],$_POST["hayir"]);
