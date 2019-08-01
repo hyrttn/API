@@ -69,7 +69,6 @@ if (isset($_POST["key"])) {
                         <button type="submit" name="url" value="url" class="btn btn-success">URL</button>
                       </div>
                     </div>
-
                     <br>
                     <br>
 
