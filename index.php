@@ -7,10 +7,14 @@ $pass="123";
 $db="bilgiler";
 
 $con = mysqli_connect($server,$user,$pass,$db);
+
 if (!$con) {
   die();
 }
 
+$html=1;
+
+mysqli_query($con, "set names 'utf8'");
 if ($_POST["il"] <> "" and $_POST["ilce"] <> "") {
   $key = "$baseurl?il={$_POST["il"]}&ilce={$_POST["ilce"]}&key=123abc";
 }
@@ -27,43 +31,64 @@ if($_POST["i"] <> "") {
 
   if (isset($_GET["key"])) {
     if ($_GET["key"]=="123abc") {
-
-      if ($_GET["i"] <> "") {
-          $rows = mysqli_query($con,"SELECT * FROM referandum WHERE id='{$_GET["i"]}'");
-          $row=mysqli_fetch_assoc($rows);
-          echo json_encode($row);
+        if ($_GET["p"]=="insert") {
+          $html=0;
+          $sql=sprintf("INSERT INTO referandum (il,ilce,kayitli,oykullanan,gecerli,gecersiz,evet,hayir)
+          VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",
+          $_GET["il"],$_GET["ilce"],$_GET["kayitli"],$_GET["oykullanan"],
+          $_GET["gecerli"],$_GET["gecersiz"],$_GET["evet"],$_GET["hayir"]);
+          $result=mysqli_query($con,$sql);
+          if ($result) {
+            header("location:insert.php?insert=1");
+          }
+          else {
+            header("location:insert.php?insert=0");
+          }
         }
+        else {
+          $html=0;
+          if ($_GET["i"] <> "") {
+              $rows = mysqli_query($con,"SELECT * FROM referandum WHERE id='{$_GET["i"]}'");
+              $row=mysqli_fetch_assoc($rows);
+              echo json_encode($row);
+            }
 
-      if ($_GET["il"] <> "" and $_GET["ilce"] <> "") {
-        $rows = mysqli_query($con,"SELECT * FROM referandum WHERE il='{$_GET["il"]}' AND ilce='{$_GET["ilce"]}'");
-        $row=mysqli_fetch_assoc($rows);
-        echo json_encode($row);
-      }
-      else if ($_GET["ilce"] <> "") {
-        $rows = mysqli_query($con,"SELECT * FROM referandum WHERE ilce='{$_GET["ilce"]}'");
-        $row=mysqli_fetch_assoc($rows);
-        echo json_encode($row);
-      }
-      else if ($_GET["il"] <> "") {
-        $rows = mysqli_query($con,"SELECT * FROM referandum WHERE il= '{$_GET["il"]}'");
-        $row=mysqli_fetch_assoc($rows);
-        echo json_encode($row);
-      }
+          if ($_GET["il"] <> "" and $_GET["ilce"] <> "") {
+            $rows = mysqli_query($con,"SELECT * FROM referandum WHERE il='{$_GET["il"]}' AND ilce='{$_GET["ilce"]}'");
+            $row=mysqli_fetch_assoc($rows);
+            echo json_encode($row);
+          }
+          else if ($_GET["ilce"] <> "") {
+            $rows = mysqli_query($con,"SELECT * FROM referandum WHERE ilce='{$_GET["ilce"]}'");
+            $row=mysqli_fetch_assoc($rows);
+            echo json_encode($row);
+          }
+          else if ($_GET["il"] <> "") {
+            $rows = mysqli_query($con,"SELECT * FROM referandum WHERE il= '{$_GET["il"]}'");
+            $row=mysqli_fetch_assoc($rows);
+            echo json_encode($row);
+          }
+          header('Content-Type: application/json');
+        }
   }
   else {
+    $html=0;
+    header('Content-Type: application/json');
     echo '{"Response":"False","Error":"Geçersiz API key!"}';
   }
-  header('Content-Type: application/json');
+
 }
-else {
-
-  $rows = mysqli_query($con,"SELECT id,il,ilce FROM referandum");
-  while ($row=mysqli_fetch_assoc($rows)) {
-    $iller .= "<option value='{$row["id"]}'>{$row["il"]} - {$row["ilce"]}</option>";
-  }
 
 
+
+if($html==1) {
+
+      $rows = mysqli_query($con,"SELECT id,il,ilce FROM referandum");
+      while ($row=mysqli_fetch_assoc($rows)) {
+        $iller .= "<option value='{$row["id"]}'>{$row["il"]} - {$row["ilce"]}</option>";
+      }
    ?>
+
    <!doctype html>
   <html lang="tr">
     <head>
@@ -85,6 +110,9 @@ else {
                 <div class="col-6">
                   <h1>Referandum API</h1>
                   <div class="jumbotron">
+                    <div class="alert alert-success w-100" role="alert">
+                      <?php echo $apiurl ?>
+                    </div>
                     <form method="post">
                       <div class="container">
                         <div class="col-6 offset-3">
@@ -99,10 +127,9 @@ else {
                       <br>
                       <br>
                     </form>
-                      <div class="alert alert-secondary w-100" role="alert">
-                        <?php echo $apiurl ?>
-                      </div>
+
                     <a href="api.php"><button type="button" class="btn btn-light">API Test</button></a>
+                    <a href="insert.php"><button type="button" class="btn btn-light">Veri Ekle</button></a>
                   </div>
                 </div>
               <div class="col">

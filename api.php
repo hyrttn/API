@@ -54,6 +54,7 @@ if (isset($_POST["url"])) {
                       <?php echo $veri ?>
                     </div>
                     <a href="index.php"><button type="button" class="btn btn-light">Geri Dön</button></a>
+                    <a href="insert.php"><button type="button" class="btn btn-light">Veri Ekle</button></a>
 
                   </form>
                 </div>
